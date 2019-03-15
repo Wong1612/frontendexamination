@@ -1,5 +1,7 @@
 import React from 'react'
 import Carousel from './carousel'
+import{ connect } from 'react-redux'
+import Product from './productlist'
 
 
 class Home extends React.Component{
@@ -33,15 +35,28 @@ class Home extends React.Component{
                         
                     </div>
                 
-                    <div className="col-lg-9">
+                    <div className="col-lg-9"> 
                         <div className="my-4">
                             <Carousel />
                         </div>
+                        {
+                            this.props.username !== "" ?
+                            <h1 style = {{fontSize: '14px'}}>Selamat Datang {this.props.username}!</h1>
+                            : <h1 style = {{fontSize: '14px'}}>Selamat Datang!</h1>
+
+                        }
                     </div>
                 </div>
+                <Product/>
             </div>
         )
     }
 }
 
-export default Home
+const mapStateToProps = (state) => {
+    return {
+        id: state.userstate.id, 
+        username: state.userstate.username// state.(index.js).(userGlobal.js [depending on which object the user is taking])
+    }
+}
+export default connect(mapStateToProps)(Home)
