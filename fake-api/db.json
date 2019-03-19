@@ -1,0 +1,67 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "wongton",
+      "password": "123123",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "username": "miraie123",
+      "password": "123123",
+      "role": "user"
+    },
+    {
+      "username": "ansonwong79@gmail.com",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "username": "mrwproductionhouse@gmail.com",
+      "role": "user",
+      "id": 4
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "nama": "THE IDOLM@STER MILLION LIVE! Mirai Kasuga Million Spark Figure",
+      "harga": 1500000,
+      "discount": 10,
+      "desc": "Mirai Kasuga Million Spark Figure from THE IDOLM@STER MILLION LIVE!",
+      "img": "https://images.goodsmile.info/cgm/images/product/20160615/5749/39628/large/570b9a5f447c04e040ab62f8b74b3171.jpg",
+      "kategori": "Figures and Collectibles"
+    },
+    {
+      "id": 2,
+      "nama": "THE IDOLM@STER MILLION LIVE! MANGA VOL.1",
+      "harga": 149000,
+      "discount": 0,
+      "desc": "First Volume of THE IDOLM@STER MILLION LIVE! Manga",
+      "img": "https://millionlive.weebly.com/uploads/1/0/4/2/104209485/183369l_orig.jpg",
+      "kategori": "Anime and Manga"
+    },
+    {
+      "nama": "THE IDOLM@STER MILLION LIVE! MILLION THEATER GENERATION 09",
+      "harga": "300000",
+      "discount": "20",
+      "kategori": "Music",
+      "img": "http://st.cdjapan.co.jp/pictures/l/03/37/LACM-14639.jpg",
+      "desc": "THE IDOLM@STER MILLION LIVE! MILLION THEATER GENERATION 09 ft. 4Luxury",
+      "id": 3
+    }
+  ],
+  "cart": [
+    {
+      "nama": "THE IDOLM@STER MILLION LIVE! MILLION THEATER GENERATION 09",
+      "harga": 300000,
+      "discount": 20,
+      "desc": "THE IDOLM@STER MILLION LIVE! MILLION THEATER GENERATION 09 ft. 4Luxury",
+      "img": "http://st.cdjapan.co.jp/pictures/l/03/37/LACM-14639.jpg",
+      "kategori": "Music",
+      "qty": "4",
+      "id": 1
+    }
+  ]
+}
