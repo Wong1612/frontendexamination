@@ -192,7 +192,7 @@ class CustomPaginationActionsTable extends React.Component {
   renderCartJsx = () => {
       var cartjsx = this.state.rows.map((val) => {
         return (
-          <h2>Total Price: Rp. {val.harga}</h2>
+          <h2>Total Price: Rp. {val.harga * (val.qty)}</h2>
         )
       })
       return cartjsx
@@ -209,71 +209,75 @@ class CustomPaginationActionsTable extends React.Component {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
       return (
           <div>
-          <Paper className={classes.root}>
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                  <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>ID</TableCell>
-                  <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>Nama</TableCell>
-                  <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>HARGA</TableCell>
-                  <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>DISCOUNT</TableCell>
-                  <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>CATEGORY</TableCell>
-                  <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>QUANTITY</TableCell>
-                  <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>IMAGE</TableCell>
-                  <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>DESCRIPTION</TableCell>
-              </TableRow>
-            </TableHead>
-              <TableBody>
-                {this.renderJsx()}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 48 * emptyRows }}>
-                    <TableCell colSpan={6} />
+            {
+              this.props.cart !== "" ?
+              <Paper className={classes.root}>
+              <div className={classes.tableWrapper}>
+                <Table className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                      <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>ID</TableCell>
+                      <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>Nama</TableCell>
+                      <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>HARGA</TableCell>
+                      <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>DISCOUNT</TableCell>
+                      <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>CATEGORY</TableCell>
+                      <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>QUANTITY</TableCell>
+                      <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>IMAGE</TableCell>
+                      <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>DESCRIPTION</TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={3}
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      native: true,
-                    }}
-                    onChangePage={this.handleChangePage}
-                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActionsWrapped}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </div>
-        </Paper>
-        {/* ============================== Checkout ================================ */}
-        <Paper className = 'mt-3'>
-                  <Table>
-                      <TableHead>
-                        <TableRow>
-                            <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>Checkout</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                          <TableRow>
-                            <TableCell>
-                            {this.renderCartJsx()}
-                            <div className = "row mt-4">
-                              <Link to = "/product-list"><input className = "btn btn-primary" style = {{marginLeft: '5px', width: '200px'}} value = "Continue Shopping"></input></Link>
-                              <Link to = "/"><input className = "btn btn-success" style = {{marginLeft: '20px', width: '200px'}} value = "Checkout" onClick = {() => this.checkout()}></input></Link>
-                            </div>
-                            </TableCell>
-                          </TableRow>
-                      </TableBody>
-                  </Table>
+                </TableHead>
+                  <TableBody>
+                    {this.renderJsx()}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 48 * emptyRows }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        colSpan={3}
+                        count={rows.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        SelectProps={{
+                          native: true,
+                        }}
+                        onChangePage={this.handleChangePage}
+                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                        ActionsComponent={TablePaginationActionsWrapped}
+                      />
+                    </TableRow>
+                  </TableFooter>
+                </Table>
+              </div>
+            <Paper className = 'mt-3'>
+                      <Table>
+                          <TableHead>
+                            <TableRow>
+                                <TableCell style = {{fontSize: '18px', fontWeight: '500'}}>Checkout</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                              <TableRow>
+                                <TableCell>
+                                {this.renderCartJsx()}
+                                <div className = "row mt-4">
+                                  <Link to = "/product-list"><input className = "btn btn-primary" style = {{marginLeft: '5px', width: '200px'}} value = "Continue Shopping"></input></Link>
+                                  <Link to = "/"><input className = "btn btn-success" style = {{marginLeft: '20px', width: '200px'}} value = "Checkout" onClick = {() => this.checkout()}></input></Link>
+                                </div>
+                                </TableCell>
+                              </TableRow>
+                          </TableBody>
+                      </Table>
+                  </Paper>
               </Paper>
-      
+              : <h1 style = {{textAlign: 'center'}}>Cart is Empty. Start Shopping!</h1>
+             
+            }
+          
         </div>
       );
     } else  {
@@ -292,7 +296,7 @@ CustomPaginationActionsTable.propTypes = {
 const mapStateToProps = (state) => {
   return {
     role: state.userstate.role,
-    cart: state.userstate.cart,
+    cart: state.cartstate.cart,
     username: state.userstate.username
   }
 }

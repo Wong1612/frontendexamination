@@ -8,7 +8,7 @@ export const addToCart = () => {
             if (res.data.length > 0) {
                 dispatch({
                     type: 'ADD_CART',
-                    payload: res.data[0]
+                    payload: res.data[0] + 1
                 })
             }
     })
