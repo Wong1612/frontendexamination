@@ -11,6 +11,7 @@ import { keepLogin } from './1.actions'
 import './App.css';
 import Cookies from 'universal-cookie';
 import PageNotFound from './components/pagenotfound'
+import Cart from './components/cart'
 import ProductDetail from './components/productDetail'
 import ScrollToTop from './components/scrollToTop'
 
@@ -35,6 +36,7 @@ class App extends Component {
           <Route path='/product-list' component={ProductList} exact/>
           <Route path='/manage-product' component={ManageProduct} exact/>
           <Route path='/product-detail/:id' component={ProductDetail} exact/>
+          <Route path='/cart' component={Cart} exact/>
           <Route path='*' component={PageNotFound} exact/>
           </Switch>
           </ScrollToTop>

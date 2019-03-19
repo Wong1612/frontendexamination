@@ -5,6 +5,10 @@ import Product from './productlist'
 
 
 class Home extends React.Component{
+    state = {search: ''}
+    onBtnClick = () => {
+        this.setState({search : this.refs.searchBook.value})
+    }   
     render(){
         return(
             <div className="container">
@@ -13,7 +17,7 @@ class Home extends React.Component{
                         <div className="input-group mb-2">
                             <input type="text" ref="searchBook" className="form-control" placeholder="Masukkan kata kunci ... "  />
                             <div className="input-group-append">
-                                <button className="btn btn-info" type="button" id="button-addon2" ><i className="fas fa-search" /></button>
+                                <button className="btn btn-info" type="button" id="button-addon2" ><i className="fas fa-search" onClick = {this.onBtnClick}/></button>
                             </div>
                         </div> 
                         <div className="card p-2">
@@ -47,7 +51,7 @@ class Home extends React.Component{
                         }
                     </div>
                 </div>
-                <Product/>
+                <Product search = {this.state.search}/>
             </div>
         )
     }

@@ -3,6 +3,7 @@ import Axios from 'axios'
 import { urlApi } from './../support/urlApi'
 import './../support/product.css'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class ProductList extends React.Component {
     state = {listProduct : []}
@@ -11,7 +12,6 @@ class ProductList extends React.Component {
         this.getDataProduct()
     }
     
-
     getDataProduct = () => {
         Axios.get(urlApi + '/products')
         .then ((res) => this.setState({listProduct : res.data})) // gets array of objects (takes data from db.json)
@@ -20,27 +20,28 @@ class ProductList extends React.Component {
 
     renderProductJsx = () => {
         var jsx = this.state.listProduct.map((val) => {
+            // if (val.nama.toLowerCase().includes(this.props.search.toLowerCase())) {
                 return (
-                <div className="card col-md-3 mr-5 mt-3" style={{width: '18rem'}}>
-                        <Link to = {"product-detail/" + val.id}><img className="card-img-top" width = '350px' height = '350px' src={val.img} alt="Card"/></Link>
-                        {
-                            val.discount > 0 ?
-                            <div className = 'discount'>{val.discount}%</div>
-                            : null
-                        }
-                        <div className="card-body">
-                        <h4 className="card-text">{val.nama}</h4>
-                        <h5 className="card-text" style = {{fontSize: '14px'}}> Category: {val.kategori}</h5>
-                        {
-                            val.discount > 0 ?
-                            <p className="card-text" style = {{textDecoration: 'line-through', color: 'red', marginBottom: '0px'}}>Rp. {val.harga}</p>
-                            : null
-                        }
-                        <p style = {{display: 'inline', marginLeft: '0px', fontWeight: '500', fontFamily: 'Proxima Nova'}}>Rp. {val.harga - (val.harga * (val.discount/100))} </p>
-                        <button className="btn btn-primary d-block mt-50"><i className="fas fa-shopping-cart"></i> Add To Cart</button>
+                    <div className="card col-md-3 mr-5 mt-3" style={{width: '18rem'}}>
+                            <Link to = {"product-detail/" + val.id}><img className="card-img-top" width = '350px' height = '350px' src={val.img} alt="Card"/></Link>
+                            {
+                                val.discount > 0 ?
+                                <div className = 'discount'>{val.discount}%</div>
+                                : null
+                            }
+                            <div className="card-body">
+                            <h4 className="card-text">{val.nama}</h4>
+                            <h5 className="card-text" style = {{fontSize: '14px'}}> Category: {val.kategori}</h5>
+                            {
+                                val.discount > 0 ?
+                                <p className="card-text" style = {{textDecoration: 'line-through', color: 'red', marginBottom: '0px'}}>Rp. {val.harga}</p>
+                                : null
+                            }
+                            <p style = {{display: 'inline', marginLeft: '0px', fontWeight: '500', fontFamily: 'Proxima Nova'}}>Rp. {val.harga - (val.harga * (val.discount/100))} </p>
+                            <Link to = {"product-detail/" + val.id}><button className="btn btn-primary d-block mt-50"><i className="fas fa-shopping-cart"></i> Go To Product</button></Link>
+                            </div>
                         </div>
-                    </div>
-                )
+                    )
         })
         return jsx
     }
@@ -55,4 +56,12 @@ class ProductList extends React.Component {
     }
 }
 
-export default ProductList
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.userstate.username,
+        cart: state.cartstate.cart
+    }   
+}
+
+export default connect (mapStateToProps)(ProductList)

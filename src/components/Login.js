@@ -45,7 +45,7 @@ class Login extends React.Component{
             return <Redirect to = '/'/>
         }
         return(
-            <div className="container myBody" style={{minHeight:"600px"}}>
+            <div className="container myBody" style={{minHeight:"600px", fontFamily: 'Poppins'}}>
                 <div className="row justify-content-sm-center ml-auto mr-auto mt-3" >
                     
                     <form className="border mb-3" style={{padding:"20px", borderRadius:"5%"}} ref="formLogin">

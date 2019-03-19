@@ -1,14 +1,20 @@
 import React from 'react'
 import Axios from 'axios';
+import swal from 'sweetalert'
 import { urlApi } from '../support/urlApi'
 import { connect } from 'react-redux'
+import { addToCart } from './../1.actions'
 
 class ProductDetail extends React.Component {
-    state = {products : {}}
+    state = {products : {}, cart: []}
 
 
     componentDidMount() {
         this.getDataApi()
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({cart: newProps.cart})
     }
 
     getDataApi = () => {
@@ -31,10 +37,44 @@ class ProductDetail extends React.Component {
         }
     }
 
+    addToCart = () => {
+        if (this.refs.inputQty.value === "") {
+            swal('Quantity is empty!','Please add quantity for your selected product.','error')
+        } else {
+            swal('Product added successfully!','Your cart has been updated.','success')
+            var nama = this.state.products.nama
+            var harga = parseInt(this.state.products.harga)
+            var img = this.state.products.img
+            var desc = this.state.products.desc
+            var kategori = this.state.products.kategori
+            var discount = parseInt(this.state.products.discount)
+            var qty = this.refs.inputQty.value 
+
+            var newData = {
+                nama: nama,
+                harga: harga,
+                discount: discount,
+                desc: desc,
+                img: img,
+                kategori: kategori,
+                qty : qty
+            }
+
+            Axios.get(urlApi + '/cart/', newData)
+            .then((res) => {
+                Axios.post(urlApi + '/cart/', newData)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+
+            }
+    }
+
     render() {
         var {nama, img, discount, desc, harga} = this.state.products
             return (
-                <div className = "container">
+                <div className = "container" style = {{marginTop: '70px'}}>
                     <div className = "row">
                         <div className = 'col-md-4'>
                         <div className="card" style={{width: '100%'}}>
@@ -46,7 +86,7 @@ class ProductDetail extends React.Component {
                             <h1 style = {{color: 'black'}}>{nama}</h1>
                             {
                                 discount > 0 ?
-                                <div style = {{backgroundColor: 'darkred', width: '80px', height: '22px', color: 'white', textAlign: 'center', display: 'inline-block'}}>{discount}% OFF</div>
+                                <div style = {{backgroundColor: '#ea3135', width: '80px', height: '22px', color: 'white', textAlign: 'center', display: 'inline-block'}}>{discount}% OFF</div>
                                 : null
                             }
                             {
@@ -84,7 +124,7 @@ class ProductDetail extends React.Component {
                                 }
                                 {
                                     this.props.username !== "" ? 
-                                    <input className = "btn btn-success col-md-3" style = {{marginLeft: '15px'}} value = "Add To Cart"></input>
+                                    <input className = "btn btn-success col-md-3" style = {{marginLeft: '15px'}} value = "Add To Cart" onClick = {this.addToCart}></input>
                                     : <input className = "btn btn-success col-md-3 disabled" style = {{marginLeft: '15px'}} value = "Add To Cart"></input>
                                 }
                                 
@@ -100,7 +140,8 @@ class ProductDetail extends React.Component {
 const mapStateToProps = (state) => {
     return {
         username: state.userstate.username,
+        cart: state.userstate.cart
     }   
 }
 
-export default connect(mapStateToProps) (ProductDetail)
+export default connect(mapStateToProps,{addToCart})(ProductDetail)

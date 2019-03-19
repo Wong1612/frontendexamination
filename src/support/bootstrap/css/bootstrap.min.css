@@ -166,13 +166,13 @@ sup {
 }
 
 a {
-    color: #007bff;
+    color: white;
     text-decoration: none;
     background-color: transparent
 }
 
 a:hover {
-    color: #0056b3;
+    color: white;
     text-decoration: underline
 }
 
@@ -2844,8 +2844,8 @@ fieldset:disabled a.btn {
 
 .btn-info {
     color: #fff;
-    background-color: #17a2b8;
-    border-color: #17a2b8
+    background-color: #f7f7f7;
+    border-color: #f7f7f7;
 }
 
 .btn-info:hover {
